@@ -1,0 +1,165 @@
+{
+    "appKeys": {
+        "KEY_BT_LOGO_TYPE": 8,
+        "KEY_HIDE_SECONDS": 7,
+        "KEY_HOUR_COLOR": 3,
+        "KEY_MINUTE_COLOR": 4,
+        "KEY_SECOND_COLOR": 5,
+        "KEY_SHOW_ANIMATION": 9,
+        "KEY_TEMPERATURE": 2,
+        "KEY_TEMP_SCALE": 6,
+        "isConfig": 1,
+        "isWeather": 0
+    },
+    "capabilities": [
+        "location",
+        "configurable"
+    ],
+    "companyName": "hart.levy@gmail.com",
+    "longName": "PixelGrid",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/thu.png",
+                "name": "THU",
+                "type": "png"
+            },
+            {
+                "file": "images/6.png",
+                "name": "DIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/7.png",
+                "name": "DIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/0.png",
+                "name": "DIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/fri.png",
+                "name": "FRI",
+                "type": "png"
+            },
+            {
+                "file": "images/degree.png",
+                "name": "DEGREE",
+                "type": "png"
+            },
+            {
+                "file": "images/4B.png",
+                "name": "DIGIT4B",
+                "type": "png"
+            },
+            {
+                "file": "images/mon.png",
+                "name": "MON",
+                "type": "png"
+            },
+            {
+                "file": "images/2.png",
+                "name": "DIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/2B.png",
+                "name": "DIGIT2B",
+                "type": "png"
+            },
+            {
+                "file": "images/sun.png",
+                "name": "SUN",
+                "type": "png"
+            },
+            {
+                "file": "images/bt1.png",
+                "name": "BT1",
+                "type": "png"
+            },
+            {
+                "file": "images/slash.png",
+                "name": "SLASH",
+                "type": "png"
+            },
+            {
+                "file": "images/5.png",
+                "name": "DIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/9.png",
+                "name": "DIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/sat.png",
+                "name": "SAT",
+                "type": "png"
+            },
+            {
+                "file": "images/3.png",
+                "name": "DIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/7B.png",
+                "name": "DIGIT7B",
+                "type": "png"
+            },
+            {
+                "file": "images/8.png",
+                "name": "DIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/neg.png",
+                "name": "NEGATIVE",
+                "type": "png"
+            },
+            {
+                "file": "images/wed.png",
+                "name": "WED",
+                "type": "png"
+            },
+            {
+                "file": "images/bt2.png",
+                "name": "BT2",
+                "type": "png"
+            },
+            {
+                "file": "images/4.png",
+                "name": "DIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/1.png",
+                "name": "DIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/1B.png",
+                "name": "DIGIT1B",
+                "type": "png"
+            },
+            {
+                "file": "images/tue.png",
+                "name": "TUE",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "PixelGrid",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "df0c37f2-05dc-483a-8904-cf51ab003c22",
+    "versionLabel": "2.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
