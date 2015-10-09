@@ -151,107 +151,107 @@
                 "type": "png"
             },
           	{
-                "file": "images/digits_small/1.png",
+                "file": "images/digits_small/1_sm.png",
                 "name": "SMALLDIGIT1",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/2.png",
+                "file": "images/digits_small/2_sm.png",
                 "name": "SMALLDIGIT2",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/3.png",
+                "file": "images/digits_small/3_sm.png",
                 "name": "SMALLDIGIT3",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/4.png",
+                "file": "images/digits_small/4_sm.png",
                 "name": "SMALLDIGIT4",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/5.png",
+                "file": "images/digits_small/5_sm.png",
                 "name": "SMALLDIGIT5",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/6.png",
+                "file": "images/digits_small/6_sm.png",
                 "name": "SMALLDIGIT6",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/7.png",
+                "file": "images/digits_small/7_sm.png",
                 "name": "SMALLDIGIT7",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/8.png",
+                "file": "images/digits_small/8_sm.png",
                 "name": "SMALLDIGIT8",
                 "type": "png"
             },    
             {        
-                "file": "images/digits_small/9.png",
+                "file": "images/digits_small/9_sm.png",
                 "name": "SMALLDIGIT9",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_small/0.png",
+                "file": "images/digits_small/0_sm.png",
                 "name": "SMALLDIGIT0",
                 "type": "png"
             },     
           	{
-                "file": "images/digits_medium/1.png",
+                "file": "images/digits_medium/1_med.png",
                 "name": "MEDIUMDIGIT1",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/2.png",
+                "file": "images/digits_medium/2_med.png",
                 "name": "MEDIUMDIGIT2",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/3.png",
+                "file": "images/digits_medium/3_med.png",
                 "name": "MEDIUMDIGIT3",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/4.png",
+                "file": "images/digits_medium/4_med.png",
                 "name": "MEDIUMDIGIT4",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/5.png",
+                "file": "images/digits_medium/5_med.png",
                 "name": "MEDIUMDIGIT5",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/6.png",
+                "file": "images/digits_medium/6_med.png",
                 "name": "MEDIUMDIGIT6",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/7.png",
+                "file": "images/digits_medium/7_med.png",
                 "name": "MEDIUMDIGIT7",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/8.png",
+                "file": "images/digits_medium/8_med.png",
                 "name": "MEDIUMDIGIT8",
                 "type": "png"
             },    
             {        
-                "file": "images/digits_medium/9.png",
+                "file": "images/digits_medium/9_med.png",
                 "name": "MEDIUMDIGIT9",
                 "type": "png"
             }, 
             {
-                "file": "images/digits_medium/0.png",
+                "file": "images/digits_medium/0_med.png",
                 "name": "MEDIUMDIGIT0",
                 "type": "png"
             },     
             {
-                "file": "images/digits_medium/colon.png",
+                "file": "images/digits_medium/colon_med.png",
                 "name": "MEDIUMCOLON",
                 "type": "png"
             }                                                                                                                             
