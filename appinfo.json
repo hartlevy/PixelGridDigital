@@ -149,7 +149,112 @@
                 "file": "images/tue.png",
                 "name": "TUE",
                 "type": "png"
-            }
+            },
+          	{
+                "file": "images/digits_small/1.png",
+                "name": "SMALLDIGIT1",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/2.png",
+                "name": "SMALLDIGIT2",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/3.png",
+                "name": "SMALLDIGIT3",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/4.png",
+                "name": "SMALLDIGIT4",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/5.png",
+                "name": "SMALLDIGIT5",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/6.png",
+                "name": "SMALLDIGIT6",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/7.png",
+                "name": "SMALLDIGIT7",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/8.png",
+                "name": "SMALLDIGIT8",
+                "type": "png"
+            },    
+            {        
+                "file": "images/digits_small/9.png",
+                "name": "SMALLDIGIT9",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_small/0.png",
+                "name": "SMALLDIGIT0",
+                "type": "png"
+            },     
+          	{
+                "file": "images/digits_medium/1.png",
+                "name": "MEDIUMDIGIT1",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/2.png",
+                "name": "MEDIUMDIGIT2",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/3.png",
+                "name": "MEDIUMDIGIT3",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/4.png",
+                "name": "MEDIUMDIGIT4",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/5.png",
+                "name": "MEDIUMDIGIT5",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/6.png",
+                "name": "MEDIUMDIGIT6",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/7.png",
+                "name": "MEDIUMDIGIT7",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/8.png",
+                "name": "MEDIUMDIGIT8",
+                "type": "png"
+            },    
+            {        
+                "file": "images/digits_medium/9.png",
+                "name": "MEDIUMDIGIT9",
+                "type": "png"
+            }, 
+            {
+                "file": "images/digits_medium/0.png",
+                "name": "MEDIUMDIGIT0",
+                "type": "png"
+            },     
+            {
+                "file": "images/digits_medium/colon.png",
+                "name": "MEDIUMCOLON",
+                "type": "png"
+            }                                                                                                                             
         ]
     },
     "sdkVersion": "3",
