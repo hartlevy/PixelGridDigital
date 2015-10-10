@@ -28,6 +28,7 @@ static int temp_scale;
 static int date_format;
 static bool hide_second_hand;
 static bool show_animation;
+static int color;
 
 static int tap_counter = -1;
 static bool clock_ready = false;
@@ -80,6 +81,15 @@ static void set_container_image(GBitmap **bmp_image, BitmapLayer *bmp_layer, con
 		gbitmap_destroy(old_image);
 		old_image = NULL;
   }        
+}
+
+static void set_container_replace_color(GBitmap **bmp_image, BitmapLayer *bmp_layer, const int resource_id, uint8_t x, uint8_t  y, int color) {
+
+  set_container_image(bmp_image, bmp_layer, resource_id, x, y);
+  replace_gbitmap_color(GColorDukeBlue, (GColor)COLOR_SETS[color][2], *bmp_image, bmp_layer);  
+  replace_gbitmap_color(GColorBlue, (GColor)COLOR_SETS[color][1], *bmp_image, bmp_layer);  
+  replace_gbitmap_color(GColorBlueMoon, (GColor)COLOR_SETS[color][0], *bmp_image, bmp_layer);  
+
 }
 
 static BitmapLayer* create_bitmap_layer(GBitmap *bitmap, Layer *window_layer,
@@ -135,14 +145,27 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
   int x = RECTWIDTH;
   int y = 15*RECTWIDTH;
   
-	set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y);  
-	set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y);  
-	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y);  
-	set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y);  
-	set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y);    
+  if(sec == 0 || s_time_digits_bitmap[1] == NULL){
+    if(min == 0 || s_time_digits_bitmap[1] == NULL){
+	    set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y);  
+	    set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y);  
+    }
+    set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y);  
+	  set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y);    
+  }
   set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x + 27*RECTWIDTH, y+3*RECTWIDTH);    
 	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 31*RECTWIDTH, y+3*RECTWIDTH);    
+	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y);  
 
+  
+	/*set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y, color);    
+  set_container_replace_color(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x + 27*RECTWIDTH, y+3*RECTWIDTH,color);    
+	set_container_replace_color(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 31*RECTWIDTH, y+3*RECTWIDTH,color);    
+  */
 
   // Draw PM
   if(t->tm_hour >= 12){  
@@ -335,6 +358,10 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
     case KEY_SHOW_ANIMATION:
       show_animation = (int)(t->value->int32);
       persist_write_bool(KEY_SHOW_ANIMATION,show_animation);
+      break;   
+    case KEY_SECOND_COLOR:
+      color = (int)t->value->int32;
+      persist_write_int(KEY_SECOND_COLOR, color);                                       
       break;      
     default:
       APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
