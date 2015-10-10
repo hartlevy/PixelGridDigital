@@ -21,8 +21,38 @@
     "resources": {
         "media": [
             {
+                "file": "images/bg2.png",
+                "name": "BG2",
+                "type": "png"
+            },
+            {
+                "file": "images/bg1.png",
+                "name": "BG1",
+                "type": "png"
+            },
+            {
                 "file": "images/thu.png",
                 "name": "THU",
+                "type": "png"
+            },
+            {
+                "file": "images/0.png",
+                "name": "DIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/1_sm.png",
+                "name": "SMALLDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/4_sm.png",
+                "name": "SMALLDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/9_sm.png",
+                "name": "SMALLDIGIT9",
                 "type": "png"
             },
             {
@@ -36,13 +66,13 @@
                 "type": "png"
             },
             {
-                "file": "images/0.png",
-                "name": "DIGIT0",
+                "file": "images/fri.png",
+                "name": "FRI",
                 "type": "png"
             },
             {
-                "file": "images/fri.png",
-                "name": "FRI",
+                "file": "images/2_sm.png",
+                "name": "SMALLDIGIT2",
                 "type": "png"
             },
             {
@@ -61,6 +91,16 @@
                 "type": "png"
             },
             {
+                "file": "images/9_med.png",
+                "name": "MEDIUMDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/8_med.png",
+                "name": "MEDIUMDIGIT8",
+                "type": "png"
+            },
+            {
                 "file": "images/2.png",
                 "name": "DIGIT2",
                 "type": "png"
@@ -71,8 +111,13 @@
                 "type": "png"
             },
             {
-                "file": "images/sun.png",
-                "name": "SUN",
+                "file": "images/0_med.png",
+                "name": "MEDIUMDIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/3_med.png",
+                "name": "MEDIUMDIGIT3",
                 "type": "png"
             },
             {
@@ -81,8 +126,28 @@
                 "type": "png"
             },
             {
-                "file": "images/slash.png",
-                "name": "SLASH",
+                "file": "images/6_med.png",
+                "name": "MEDIUMDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/0_sm.png",
+                "name": "SMALLDIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/7_sm.png",
+                "name": "SMALLDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/6_sm.png",
+                "name": "SMALLDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/5_med.png",
+                "name": "MEDIUMDIGIT5",
                 "type": "png"
             },
             {
@@ -96,8 +161,13 @@
                 "type": "png"
             },
             {
-                "file": "images/sat.png",
-                "name": "SAT",
+                "file": "images/8_sm.png",
+                "name": "SMALLDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/1_med.png",
+                "name": "MEDIUMDIGIT1",
                 "type": "png"
             },
             {
@@ -106,8 +176,38 @@
                 "type": "png"
             },
             {
+                "file": "images/4_med.png",
+                "name": "MEDIUMDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/7_med.png",
+                "name": "MEDIUMDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/sat.png",
+                "name": "SAT",
+                "type": "png"
+            },
+            {
+                "file": "images/sun.png",
+                "name": "SUN",
+                "type": "png"
+            },
+            {
                 "file": "images/7B.png",
                 "name": "DIGIT7B",
+                "type": "png"
+            },
+            {
+                "file": "images/5_sm.png",
+                "name": "SMALLDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/slash.png",
+                "name": "SLASH",
                 "type": "png"
             },
             {
@@ -131,6 +231,11 @@
                 "type": "png"
             },
             {
+                "file": "images/colon_med.png",
+                "name": "MEDIUMCOLON",
+                "type": "png"
+            },
+            {
                 "file": "images/4.png",
                 "name": "DIGIT4",
                 "type": "png"
@@ -138,6 +243,11 @@
             {
                 "file": "images/1.png",
                 "name": "DIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/3_sm.png",
+                "name": "SMALLDIGIT3",
                 "type": "png"
             },
             {
@@ -150,111 +260,11 @@
                 "name": "TUE",
                 "type": "png"
             },
-          	{
-                "file": "images/digits_small/1_sm.png",
-                "name": "SMALLDIGIT1",
-                "type": "png"
-            }, 
             {
-                "file": "images/digits_small/2_sm.png",
-                "name": "SMALLDIGIT2",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/3_sm.png",
-                "name": "SMALLDIGIT3",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/4_sm.png",
-                "name": "SMALLDIGIT4",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/5_sm.png",
-                "name": "SMALLDIGIT5",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/6_sm.png",
-                "name": "SMALLDIGIT6",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/7_sm.png",
-                "name": "SMALLDIGIT7",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/8_sm.png",
-                "name": "SMALLDIGIT8",
-                "type": "png"
-            },    
-            {        
-                "file": "images/digits_small/9_sm.png",
-                "name": "SMALLDIGIT9",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_small/0_sm.png",
-                "name": "SMALLDIGIT0",
-                "type": "png"
-            },     
-          	{
-                "file": "images/digits_medium/1_med.png",
-                "name": "MEDIUMDIGIT1",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/2_med.png",
+                "file": "images/2_med.png",
                 "name": "MEDIUMDIGIT2",
                 "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/3_med.png",
-                "name": "MEDIUMDIGIT3",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/4_med.png",
-                "name": "MEDIUMDIGIT4",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/5_med.png",
-                "name": "MEDIUMDIGIT5",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/6_med.png",
-                "name": "MEDIUMDIGIT6",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/7_med.png",
-                "name": "MEDIUMDIGIT7",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/8_med.png",
-                "name": "MEDIUMDIGIT8",
-                "type": "png"
-            },    
-            {        
-                "file": "images/digits_medium/9_med.png",
-                "name": "MEDIUMDIGIT9",
-                "type": "png"
-            }, 
-            {
-                "file": "images/digits_medium/0_med.png",
-                "name": "MEDIUMDIGIT0",
-                "type": "png"
-            },     
-            {
-                "file": "images/digits_medium/colon_med.png",
-                "name": "MEDIUMCOLON",
-                "type": "png"
-            }                                                                                                                             
+            }
         ]
     },
     "sdkVersion": "3",

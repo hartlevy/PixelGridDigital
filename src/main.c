@@ -3,16 +3,13 @@
 #include "gbitmap_color_palette_manipulator.h"
   
 static Window *s_main_window;
-static Layer *bg_layer, *s_hands_layer, *s_battery_layer, *s_bt_layer, *s_date_layer, *s_temp_layer;
+static Layer  *s_time_layer, *s_battery_layer, *s_bt_layer, *s_date_layer, *s_temp_layer;
 
-static BitmapLayer *s_faces_layer[9];
-static GBitmap *s_faces_bitmap[9];
+static BitmapLayer *s_bg_layer[2];
+static GBitmap *s_bg_bitmap[2];
 
-static BitmapLayer *s_sides_layer[6];
-static GBitmap *s_sides_bitmap[6];
-
-static BitmapLayer *s_details_layer[3];
-static GBitmap *s_details_bitmap[3];
+static BitmapLayer *s_time_digits_layer[7];
+static GBitmap *s_time_digits_bitmap[7];
 
 static BitmapLayer *s_date_digits_layer[5];
 static GBitmap *s_date_digits_bitmap[5];
@@ -26,9 +23,6 @@ static GBitmap *s_day_bitmap;
 static BitmapLayer *s_bt_img_layer;
 static GBitmap *s_bt_img_bitmap;
 
-static int seconds_color;
-static int minutes_color;
-static int hours_color;
 static int bt_image_type;
 static int temp_scale;
 static int date_format;
@@ -36,11 +30,6 @@ static bool hide_second_hand;
 static bool show_animation;
 
 static int tap_counter = -1;
-static int hour_pos = 0;
-static int minute_pos = 0;
-static int second_pos = 0;
-static bool hour_ready = false;
-static bool minute_ready = false;
 static bool clock_ready = false;
 
 AppTimer *timer;
@@ -120,22 +109,6 @@ static void plot(Layer *layer, uint8_t x, uint8_t y, float c, uint8_t colorset, 
   }  
 }
 
-// integer part of x
-static uint8_t ipart(float x){
-    return (uint8_t) x;
-}
-
-// fractional part of x
-static float fpart(float x){
-    return x - (int)x;
-}
-
-
-static float rfpart(float x){
-    return 1.0 - fpart(x);
-}
-
-
 static void swap(uint8_t *i, uint8_t *j) {
    int t = *i;
    *i = *j;
@@ -143,117 +116,34 @@ static void swap(uint8_t *i, uint8_t *j) {
 }
 
 
-static void drawAliasLine(Layer *layer, uint8_t x0, uint8_t y0,uint8_t x1,uint8_t y1, uint8_t colorset, bool thick, GContext *ctx){
-    bool steep = abs(y1 - y0) > abs(x1 - x0);
-    
-    if(steep){
-        swap(&x0, &y0);
-        swap(&x1, &y1);
-    }
-    if(x0 > x1){
-        swap(&x0, &x1);
-        swap(&y0, &y1);
-    }
-    
-    int16_t dx = x1 - x0;
-    int16_t dy = y1 - y0;
-    float gradient = (float) dy / (float) dx;
-    float intery = y0; // first y-intersection for the main loop    
 
-    for (uint8_t x = x0; x <= x1; x++){
-        if(steep){
-            if(thick){
-              plot(layer, ipart(intery)-1, x, rfpart(intery)/2, colorset, ctx);
-              plot(layer, ipart(intery), x, 1, colorset, ctx);     
-            }else{
-              plot(layer, ipart(intery), x, rfpart(intery), colorset, ctx);                   
-            }
-            plot(layer, ipart(intery)+1, x,  fpart(intery), colorset, ctx);
-        }else{
-            if(thick){
-              plot(layer, x, ipart(intery)-1, rfpart(intery)/2, colorset, ctx);
-              plot(layer, x, ipart(intery), 1, colorset, ctx);     
-            }else{
-              plot(layer, x, ipart(intery), rfpart(intery), colorset, ctx);                   
-            }                 
-            plot(layer, x, ipart(intery)+1, fpart(intery), colorset, ctx);
-        }
-        intery = intery + gradient;
-    }
-  
-    //Make sure endpoint gets drawn
-    if (steep){
-        plot(layer, y1, x1, 1, colorset, ctx);
-    }else{
-        plot(layer, x1, y1, 1, colorset, ctx);
-    }  
-}
-
-
-static GPoint createHand(int32_t angle, int16_t length, int x, int y){
-  GPoint hand = {
-    .x = (int16_t)(sin_lookup(angle) * length / TRIG_MAX_RATIO) + x,
-    .y = (int16_t)(-cos_lookup(angle) * length / TRIG_MAX_RATIO) + y,
-  };
-  return hand;
-}
-
-
-static void hands_update_proc(Layer *layer, GContext *ctx) {
-  GPoint center = { .x = WIDTH/2, .y = WIDTH/2-1};
-  int16_t second_hand_length = WIDTH / 2 - 3;
-  int16_t minute_hand_length = WIDTH / 2 - 6;
-  int16_t hour_hand_length = WIDTH / 2 - 9;
-  
+static void time_update_proc(Layer *layer, GContext *ctx) {
+ 
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
   
-  int hour = (((t->tm_hour) % 12) * 6) + (t->tm_min / 10);
+  uint8_t sec = t->tm_sec;
+  uint8_t min = t->tm_min;
+  uint8_t hr = t->tm_hour;
+
+  uint8_t h1 = (hr%12)/10;
+  uint8_t h2 = (hr%12)%10;
+  uint8_t s1 = sec/10;
+  uint8_t s2 = sec%10;
+  uint8_t m1 = min/10;
+  uint8_t m2 = min%10; 
+  int x = RECTWIDTH;
+  int y = 15*RECTWIDTH;
   
-  //Start-up animation.
-  //Flags indicate when each hand is done
-  if(show_animation && !clock_ready){
-    if(!hour_ready){
-      hour_pos+= 2;
-      if(hour_pos >= hour){
-        hour_pos = hour;
-        hour_ready = true;
-      }
-    }else if(!minute_ready){
-      minute_pos+= 2;
-      if(minute_pos >= t->tm_min){
-        minute_pos = t->tm_min;
-        minute_ready = true;
-      }
-    }else{
-      second_pos+= 2;
-      if(second_pos >= t->tm_sec){
-        second_pos = t->tm_sec;    
-        clock_ready = true;
-      }
-    }
-  }else{
-    hour_pos = hour;
-    second_pos = t->tm_sec;    
-    minute_pos = t->tm_min;
-  }
-  
-  int32_t second_angle = TRIG_MAX_ANGLE * second_pos / 60;
-  int32_t minute_angle = TRIG_MAX_ANGLE * minute_pos / 60;
-  int32_t hour_angle = TRIG_MAX_ANGLE * hour_pos / 72;
-  
-  //Create hands
-  GPoint second_hand = createHand(second_angle,second_hand_length, center.x, center.y);
-  GPoint minute_hand = createHand(minute_angle,minute_hand_length, center.x, center.y);
-  GPoint hour_hand = createHand(hour_angle,hour_hand_length, center.x, center.y);
-  
-  // Draw hand
-  drawAliasLine(layer, center.x, center.y, hour_hand.x, hour_hand.y, hours_color, true, ctx);
-  drawAliasLine(layer, center.x, center.y, minute_hand.x, minute_hand.y, minutes_color, true, ctx); 
-  if(!hide_second_hand){
-    drawAliasLine(layer, center.x, center.y, second_hand.x, second_hand.y, seconds_color, false, ctx); 
-  }
-  
+	set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y);  
+	set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y);  
+	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y);  
+	set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y);  
+	set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y);    
+  set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x + 27*RECTWIDTH, y+3*RECTWIDTH);    
+	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 31*RECTWIDTH, y+3*RECTWIDTH);    
+
+
   // Draw PM
   if(t->tm_hour >= 12){  
     graphics_context_set_fill_color(ctx, GColorYellow); 
@@ -264,7 +154,7 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 
 void timer_callback(void *data) {
     if(!clock_ready){
-      layer_mark_dirty(s_hands_layer);
+      layer_mark_dirty(s_time_layer);
  
       //Register next execution
       timer = app_timer_register(delta, (AppTimerCallback) timer_callback, NULL);
@@ -384,23 +274,15 @@ static void battery_handler(BatteryChargeState new_state) {
 }
 
 static void tap_handler(AccelAxisType axis, int32_t direction) {
-  /*if (direction > 0){
-    seconds_color ++;
-  }else{
-    seconds_color --;
-  }
-  seconds_color = (seconds_color + NUM_COLOR)%NUM_COLOR;  
-*/
-  
   tap_counter = TAP_DURATION_MED;
   show_tap_display(true);
-  layer_mark_dirty(s_hands_layer);   
+  layer_mark_dirty(s_time_layer);   
 }
 
 static void handle_second_tick(struct tm *t, TimeUnits units_changed) {
   if(clock_ready){
     if((!hide_second_hand && (units_changed & SECOND_UNIT)) || (units_changed & MINUTE_UNIT)){
-        layer_mark_dirty(s_hands_layer);
+        layer_mark_dirty(s_time_layer);
     }
   }
   if(units_changed & DAY_UNIT){
@@ -453,18 +335,6 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
     case KEY_SHOW_ANIMATION:
       show_animation = (int)(t->value->int32);
       persist_write_bool(KEY_SHOW_ANIMATION,show_animation);
-      break;
-    case KEY_HOUR_COLOR:
-      hours_color = (int)t->value->int32;
-      persist_write_int(KEY_HOUR_COLOR, hours_color);                     
-      break;
-    case KEY_MINUTE_COLOR:
-      minutes_color = (int)t->value->int32;
-      persist_write_int(KEY_MINUTE_COLOR, minutes_color);                              
-      break;
-    case KEY_SECOND_COLOR:
-      seconds_color = (int)t->value->int32;
-      persist_write_int(KEY_SECOND_COLOR, seconds_color);                                       
       break;      
     default:
       APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
@@ -474,7 +344,7 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
     t = dict_read_next(iterator);
   }
   
-  layer_mark_dirty(s_hands_layer);
+  layer_mark_dirty(s_time_layer);
 }
 
 static void parse_weather_message(DictionaryIterator *iterator, void *context){
@@ -571,55 +441,26 @@ static void main_window_load(Window *window) {
   GRect dummy_frame = { {0, 0}, {0, 0} };
   
   //create bg layers
-  s_faces_bitmap[0] = gbitmap_create_with_resource(RESOURCE_ID_BG_ARM1);  
-  s_faces_layer[0] = create_bitmap_layer(s_faces_bitmap[0], window_layer, RECTWIDTH*17,0,RECTWIDTH*3,RECTWIDTH*16);
-  s_faces_bitmap[1] = gbitmap_create_with_resource(RESOURCE_ID_BG_ARM2);   
-  s_faces_layer[1] = create_bitmap_layer(s_faces_bitmap[1], window_layer, RECTWIDTH*17,RECTWIDTH*19,RECTWIDTH*3,RECTWIDTH*19);
-  s_faces_bitmap[2] = gbitmap_create_with_resource(RESOURCE_ID_BG_ARM3);    
-  s_faces_layer[2] = create_bitmap_layer(s_faces_bitmap[2], window_layer, RECTWIDTH*20,RECTWIDTH*16,RECTWIDTH*16,RECTWIDTH*3);  
-  s_faces_bitmap[3] = gbitmap_create_with_resource(RESOURCE_ID_BG_ARM4);     
-  s_faces_layer[3] = create_bitmap_layer(s_faces_bitmap[3], window_layer, 0,RECTWIDTH*16,RECTWIDTH*17,RECTWIDTH*3);
-  s_faces_bitmap[4] = gbitmap_create_with_resource(RESOURCE_ID_BG_CENTER);     
-  s_faces_layer[4] = create_bitmap_layer(s_faces_bitmap[4], window_layer, RECTWIDTH*17,RECTWIDTH*16,RECTWIDTH*3,RECTWIDTH*3);
-  s_faces_bitmap[5] = gbitmap_create_with_resource(RESOURCE_ID_BG_FACE);     
-  s_faces_layer[5] = create_bitmap_layer(s_faces_bitmap[5], window_layer, RECTWIDTH*4,RECTWIDTH*3,RECTWIDTH*13,RECTWIDTH*13);
-  s_faces_bitmap[6] = gbitmap_create_with_resource(RESOURCE_ID_BG_FACE2);     
-  s_faces_layer[6] = create_bitmap_layer(s_faces_bitmap[6], window_layer, RECTWIDTH*20,RECTWIDTH*3,RECTWIDTH*13,RECTWIDTH*13);
-  s_faces_bitmap[7] = gbitmap_create_with_resource(RESOURCE_ID_BG_FACE3);     
-  s_faces_layer[7] = create_bitmap_layer(s_faces_bitmap[7], window_layer, RECTWIDTH*20,RECTWIDTH*19,RECTWIDTH*13,RECTWIDTH*13);
-  s_faces_bitmap[8] = gbitmap_create_with_resource(RESOURCE_ID_BG_FACE4);     
-  s_faces_layer[8] = create_bitmap_layer(s_faces_bitmap[8], window_layer, RECTWIDTH*4,RECTWIDTH*19,RECTWIDTH*13,RECTWIDTH*13);
+  s_bg_bitmap[0] = gbitmap_create_with_resource(RESOURCE_ID_BG1);  
+  s_bg_layer[0] = create_bitmap_layer(s_bg_bitmap[0], window_layer, 0,0,144,127);
+  s_bg_bitmap[1] = gbitmap_create_with_resource(RESOURCE_ID_BG2);   
+  s_bg_layer[1] = create_bitmap_layer(s_bg_bitmap[1], window_layer, 0,127,144,41);
 
-  s_sides_bitmap[0] = gbitmap_create_with_resource(RESOURCE_ID_BG_SIDE1);     
-  s_sides_layer[0] = create_bitmap_layer(s_sides_bitmap[0], window_layer, 0,0,RECTWIDTH*4,RECTWIDTH*16);
-  s_sides_bitmap[1] = gbitmap_create_with_resource(RESOURCE_ID_BG_SIDE2);     
-  s_sides_layer[1] = create_bitmap_layer(s_sides_bitmap[1], window_layer, 0,RECTWIDTH*19,RECTWIDTH*4,RECTWIDTH*13);
-  s_sides_bitmap[2] = gbitmap_create_with_resource(RESOURCE_ID_BG_SIDE1);     
-  s_sides_layer[2] = create_bitmap_layer(s_sides_bitmap[2], window_layer, RECTWIDTH*33,0,RECTWIDTH*3,RECTWIDTH*16);
-  s_sides_bitmap[3] = gbitmap_create_with_resource(RESOURCE_ID_BG_SIDE2);     
-  s_sides_layer[3] = create_bitmap_layer(s_sides_bitmap[3], window_layer, RECTWIDTH*33,RECTWIDTH*19,RECTWIDTH*3,RECTWIDTH*13);
-  s_sides_bitmap[4] = gbitmap_create_with_resource(RESOURCE_ID_BG_TOP);     
-  s_sides_layer[4] = create_bitmap_layer(s_sides_bitmap[4], window_layer, RECTWIDTH*4,0,RECTWIDTH*13,RECTWIDTH*3);
-  s_sides_bitmap[5] = gbitmap_create_with_resource(RESOURCE_ID_BG_TOP);     
-  s_sides_layer[5] = create_bitmap_layer(s_sides_bitmap[5], window_layer, RECTWIDTH*20,0,RECTWIDTH*13,RECTWIDTH*3);
- 
-  s_details_bitmap[0] = gbitmap_create_with_resource(RESOURCE_ID_BG_PM);     
-  s_details_layer[0] = create_bitmap_layer(s_details_bitmap[0], window_layer, 0,RECTWIDTH*32,RECTWIDTH*17,RECTWIDTH*6);
-  s_details_bitmap[1] = gbitmap_create_with_resource(RESOURCE_ID_BG_PM);     
-  s_details_layer[1] = create_bitmap_layer(s_details_bitmap[1], window_layer, RECTWIDTH*20,RECTWIDTH*32,RECTWIDTH*17,RECTWIDTH*6);
-  s_details_bitmap[2] = gbitmap_create_with_resource(RESOURCE_ID_BG_DATE);     
-  s_details_layer[2] = create_bitmap_layer(s_details_bitmap[2], window_layer, 0,RECTWIDTH*38,RECTWIDTH*36,RECTWIDTH*4); 
   
+  //create time layer
+  s_time_layer = layer_create(bounds);
+  layer_set_update_proc(s_time_layer, time_update_proc);
+  layer_add_child(window_layer, s_time_layer);
   
+  memset(&s_time_digits_layer, 0, sizeof(s_time_digits_layer));
   
-  //create hands layer
-  s_hands_layer = layer_create(bounds);
-  layer_set_update_proc(s_hands_layer, hands_update_proc);
-  layer_add_child(window_layer, s_hands_layer);
+  for (int i = 0; i < 7; ++i) {
+    s_time_digits_layer[i] = bitmap_layer_create(dummy_frame);
+    layer_add_child(s_time_layer, bitmap_layer_get_layer(s_time_digits_layer[i]));
+  }    
   
   //create date layer
   s_date_layer = layer_create(GRect((WIDTH/2-1)*RECTWIDTH, (WIDTH+2)*RECTWIDTH,20*RECTWIDTH,4*RECTWIDTH));
- // layer_set_update_proc(s_date_layer, date_update_proc);
   layer_add_child(window_layer, s_date_layer);
   
   memset(&s_date_digits_layer, 0, sizeof(s_date_digits_layer));
@@ -671,17 +512,9 @@ static void main_window_load(Window *window) {
 static void main_window_unload(Window *window) {
     // Destroy Layers
   
-  for(int i = 0; i < 9; i++){
-    destroy_bitmap_layer(s_faces_layer[i], s_faces_bitmap[i] );
-  }
-  
-  for(int i = 0; i < 6; i++){
-    destroy_bitmap_layer(s_sides_layer[i], s_sides_bitmap[i] );    
-  }
-  
-  for(int i = 0; i < 3; i++){
-    destroy_bitmap_layer(s_details_layer[i], s_details_bitmap[i] );    
-  }   
+  for(int i = 0; i < 2; i++){
+    destroy_bitmap_layer(s_bg_layer[i], s_bg_bitmap[i] );
+  } 
   
   for(int i = 0; i < 5; i++){
     destroy_bitmap_layer(s_date_digits_layer[i], s_date_digits_bitmap[i] );    
@@ -694,7 +527,7 @@ static void main_window_unload(Window *window) {
   destroy_bitmap_layer(s_bt_img_layer, s_bt_img_bitmap);   
   destroy_bitmap_layer(s_day_layer, s_day_bitmap);        
   
-  layer_destroy(s_hands_layer);    
+  layer_destroy(s_time_layer);    
   layer_destroy(s_battery_layer);  
   layer_destroy(s_date_layer);    
   layer_destroy(s_bt_layer);  
@@ -707,24 +540,12 @@ static void init() {
   
   srand(time(NULL));
   
-  seconds_color = BLUE;
-  minutes_color = WHITE;
-  hours_color = WHITE;
   bt_image_type = BT_IMAGE_SMALL;
   temp_scale = CELSIUS_SCALE; 
   date_format = DDMM_DATE_FORMAT;
   hide_second_hand = false;
   show_animation = true;  
   
-  if(persist_exists(KEY_SECOND_COLOR)){
-    seconds_color = persist_read_int(KEY_SECOND_COLOR);
-  }
-  if(persist_exists(KEY_HOUR_COLOR)){
-    hours_color = persist_read_int(KEY_HOUR_COLOR);
-  }
-  if(persist_exists(KEY_MINUTE_COLOR)){
-    minutes_color = persist_read_int(KEY_MINUTE_COLOR);
-  }
   if(persist_exists(KEY_TEMP_SCALE)){
     temp_scale = persist_read_int(KEY_TEMP_SCALE);
   }
