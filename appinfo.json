@@ -264,218 +264,217 @@
                 "file": "images/2_med.png",
                 "name": "MEDIUMDIGIT2",
                 "type": "png"
-            }
+            },
             {
                 "file": "images/1_med_r.png",
                 "name": "MEDIUMREDDIGIT1",
                 "type": "png"
-            }  
+            }, 
             {
                 "file": "images/2_med_r.png",
                 "name": "MEDIUMREDDIGIT2",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/3_med_r.png",
                 "name": "MEDIUMREDDIGIT3",
                 "type": "png"
-            }     
+            },     
             {
                 "file": "images/4_med_r.png",
                 "name": "MEDIUMREDDIGIT4",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/5_med_r.png",
                 "name": "MEDIUMREDDIGIT5",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/6_med_r.png",
                 "name": "MEDIUMREDDIGIT6",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/7_med_r.png",
                 "name": "MEDIUMREDDIGIT7",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/8_med_r.png",
                 "name": "MEDIUMREDDIGIT8",
                 "type": "png"
-            }           
+            },           
             {
                 "file": "images/9_med_r.png",
                 "name": "MEDIUMREDDIGIT9",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/0_med_r.png",
                 "name": "MEDIUMREDDIGIT0",
                 "type": "png"
-            }                
+            },                
             {
                 "file": "images/1_med_k.png",
                 "name": "MEDIUMBLACKDIGIT1",
                 "type": "png"
-            }  
+            },  
             {
                 "file": "images/2_med_k.png",
                 "name": "MEDIUMBLACKDIGIT2",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/3_med_k.png",
                 "name": "MEDIUMBLACKDIGIT3",
                 "type": "png"
-            }     
+            },     
             {
                 "file": "images/4_med_k.png",
                 "name": "MEDIUMBLACKDIGIT4",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/5_med_k.png",
                 "name": "MEDIUMBLACKDIGIT5",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/6_med_k.png",
                 "name": "MEDIUMBLACKDIGIT6",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/7_med_k.png",
                 "name": "MEDIUMBLACKDIGIT7",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/8_med_k.png",
                 "name": "MEDIUMBLACKDIGIT8",
                 "type": "png"
-            }           
+            },           
             {
                 "file": "images/9_med_k.png",
                 "name": "MEDIUMBLACKDIGIT9",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/0_med_k.png",
                 "name": "MEDIUMBLACKDIGIT0",
                 "type": "png"
-            }      
+            },      
             {
                 "file": "images/colon_med_r.png",
                 "name": "MEDIUMREDCOLON",
                 "type": "png"
-            }  
+            },  
             {
                 "file": "images/colon_med_k.png",
                 "name": "MEDIUMBLACKCOLON",
                 "type": "png"
-            }     
+            },     
             {
                 "file": "images/1_sm_r.png",
                 "name": "SMALLREDDIGIT1",
                 "type": "png"
-            }  
+            },  
             {
                 "file": "images/2_sm_r.png",
                 "name": "SMALLREDDIGIT2",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/3_sm_r.png",
                 "name": "SMALLREDDIGIT3",
                 "type": "png"
-            }     
+            },     
             {
                 "file": "images/4_sm_r.png",
                 "name": "SMALLREDDIGIT4",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/5_sm_r.png",
                 "name": "SMALLREDDIGIT5",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/6_sm_r.png",
                 "name": "SMALLREDDIGIT6",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/7_sm_r.png",
                 "name": "SMALLREDDIGIT7",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/8_sm_r.png",
                 "name": "SMALLREDDIGIT8",
                 "type": "png"
-            }           
+            },           
             {
                 "file": "images/9_sm_r.png",
                 "name": "SMALLREDDIGIT9",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/0_sm_r.png",
                 "name": "SMALLREDDIGIT0",
                 "type": "png"
-            }                
+            },                
             {
                 "file": "images/1_sm_k.png",
                 "name": "SMALLBLACKDIGIT1",
                 "type": "png"
-            }  
+            },  
             {
                 "file": "images/2_sm_k.png",
                 "name": "SMALLBLACKDIGIT2",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/3_sm_k.png",
                 "name": "SMALLBLACKDIGIT3",
                 "type": "png"
-            }     
+            },     
             {
                 "file": "images/4_sm_k.png",
                 "name": "SMALLBLACKDIGIT4",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/5_sm_k.png",
                 "name": "SMALLBLACKDIGIT5",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/6_sm_k.png",
                 "name": "SMALLBLACKDIGIT6",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/7_sm_k.png",
                 "name": "SMALLBLACKDIGIT7",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/8_sm_k.png",
                 "name": "SMALLBLACKDIGIT8",
                 "type": "png"
-            }           
+            },           
             {
                 "file": "images/9_sm_k.png",
                 "name": "SMALLBLACKDIGIT9",
                 "type": "png"
-            } 
+            }, 
             {
                 "file": "images/0_sm_k.png",
                 "name": "SMALLBLACKDIGIT0",
                 "type": "png"
-            }                           
-                                                                                                                             
+            }                                                                                                                                               
         ]
     },
     "sdkVersion": "3",
