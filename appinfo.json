@@ -21,196 +21,6 @@
     "resources": {
         "media": [
             {
-                "file": "images/bg2.png",
-                "name": "BG2",
-                "type": "png"
-            },
-            {
-                "file": "images/bg1.png",
-                "name": "BG1",
-                "type": "png"
-            },
-            {
-                "file": "images/thu.png",
-                "name": "THU",
-                "type": "png"
-            },
-            {
-                "file": "images/0.png",
-                "name": "DIGIT0",
-                "type": "png"
-            },
-            {
-                "file": "images/1_sm.png",
-                "name": "SMALLDIGIT1",
-                "type": "png"
-            },
-            {
-                "file": "images/4_sm.png",
-                "name": "SMALLDIGIT4",
-                "type": "png"
-            },
-            {
-                "file": "images/9_sm.png",
-                "name": "SMALLDIGIT9",
-                "type": "png"
-            },
-            {
-                "file": "images/6.png",
-                "name": "DIGIT6",
-                "type": "png"
-            },
-            {
-                "file": "images/7.png",
-                "name": "DIGIT7",
-                "type": "png"
-            },
-            {
-                "file": "images/fri.png",
-                "name": "FRI",
-                "type": "png"
-            },
-            {
-                "file": "images/2_sm.png",
-                "name": "SMALLDIGIT2",
-                "type": "png"
-            },
-            {
-                "file": "images/degree.png",
-                "name": "DEGREE",
-                "type": "png"
-            },
-            {
-                "file": "images/4B.png",
-                "name": "DIGIT4B",
-                "type": "png"
-            },
-            {
-                "file": "images/mon.png",
-                "name": "MON",
-                "type": "png"
-            },
-            {
-                "file": "images/9_med.png",
-                "name": "MEDIUMDIGIT9",
-                "type": "png"
-            },
-            {
-                "file": "images/8_med.png",
-                "name": "MEDIUMDIGIT8",
-                "type": "png"
-            },
-            {
-                "file": "images/2.png",
-                "name": "DIGIT2",
-                "type": "png"
-            },
-            {
-                "file": "images/2B.png",
-                "name": "DIGIT2B",
-                "type": "png"
-            },
-            {
-                "file": "images/0_med.png",
-                "name": "MEDIUMDIGIT0",
-                "type": "png"
-            },
-            {
-                "file": "images/3_med.png",
-                "name": "MEDIUMDIGIT3",
-                "type": "png"
-            },
-            {
-                "file": "images/bt1.png",
-                "name": "BT1",
-                "type": "png"
-            },
-            {
-                "file": "images/6_med.png",
-                "name": "MEDIUMDIGIT6",
-                "type": "png"
-            },
-            {
-                "file": "images/0_sm.png",
-                "name": "SMALLDIGIT0",
-                "type": "png"
-            },
-            {
-                "file": "images/7_sm.png",
-                "name": "SMALLDIGIT7",
-                "type": "png"
-            },
-            {
-                "file": "images/6_sm.png",
-                "name": "SMALLDIGIT6",
-                "type": "png"
-            },
-            {
-                "file": "images/5_med.png",
-                "name": "MEDIUMDIGIT5",
-                "type": "png"
-            },
-            {
-                "file": "images/5.png",
-                "name": "DIGIT5",
-                "type": "png"
-            },
-            {
-                "file": "images/9.png",
-                "name": "DIGIT9",
-                "type": "png"
-            },
-            {
-                "file": "images/8_sm.png",
-                "name": "SMALLDIGIT8",
-                "type": "png"
-            },
-            {
-                "file": "images/1_med.png",
-                "name": "MEDIUMDIGIT1",
-                "type": "png"
-            },
-            {
-                "file": "images/3.png",
-                "name": "DIGIT3",
-                "type": "png"
-            },
-            {
-                "file": "images/4_med.png",
-                "name": "MEDIUMDIGIT4",
-                "type": "png"
-            },
-            {
-                "file": "images/7_med.png",
-                "name": "MEDIUMDIGIT7",
-                "type": "png"
-            },
-            {
-                "file": "images/sat.png",
-                "name": "SAT",
-                "type": "png"
-            },
-            {
-                "file": "images/sun.png",
-                "name": "SUN",
-                "type": "png"
-            },
-            {
-                "file": "images/7B.png",
-                "name": "DIGIT7B",
-                "type": "png"
-            },
-            {
-                "file": "images/5_sm.png",
-                "name": "SMALLDIGIT5",
-                "type": "png"
-            },
-            {
-                "file": "images/slash.png",
-                "name": "SLASH",
-                "type": "png"
-            },
-            {
                 "file": "images/8.png",
                 "name": "DIGIT8",
                 "type": "png"
@@ -221,43 +31,23 @@
                 "type": "png"
             },
             {
-                "file": "images/wed.png",
-                "name": "WED",
+                "file": "images/3.png",
+                "name": "DIGIT3",
                 "type": "png"
             },
             {
-                "file": "images/bt2.png",
-                "name": "BT2",
+                "file": "images/0_med_k.png",
+                "name": "MEDIUMBLACKDIGIT0",
                 "type": "png"
             },
             {
-                "file": "images/colon_med.png",
-                "name": "MEDIUMCOLON",
+                "file": "images/7.png",
+                "name": "DIGIT7",
                 "type": "png"
             },
             {
-                "file": "images/4.png",
-                "name": "DIGIT4",
-                "type": "png"
-            },
-            {
-                "file": "images/1.png",
-                "name": "DIGIT1",
-                "type": "png"
-            },
-            {
-                "file": "images/3_sm.png",
-                "name": "SMALLDIGIT3",
-                "type": "png"
-            },
-            {
-                "file": "images/1B.png",
-                "name": "DIGIT1B",
-                "type": "png"
-            },
-            {
-                "file": "images/tue.png",
-                "name": "TUE",
+                "file": "images/0_sm_k.png",
+                "name": "SMALLBLACKDIGIT0",
                 "type": "png"
             },
             {
@@ -266,215 +56,425 @@
                 "type": "png"
             },
             {
-                "file": "images/1_med_r.png",
-                "name": "MEDIUMREDDIGIT1",
+                "file": "images/1_med.png",
+                "name": "MEDIUMDIGIT1",
                 "type": "png"
-            }, 
+            },
             {
-                "file": "images/2_med_r.png",
-                "name": "MEDIUMREDDIGIT2",
+                "file": "images/7_med.png",
+                "name": "MEDIUMDIGIT7",
                 "type": "png"
-            }, 
-            {
-                "file": "images/3_med_r.png",
-                "name": "MEDIUMREDDIGIT3",
-                "type": "png"
-            },     
-            {
-                "file": "images/4_med_r.png",
-                "name": "MEDIUMREDDIGIT4",
-                "type": "png"
-            }, 
-            {
-                "file": "images/5_med_r.png",
-                "name": "MEDIUMREDDIGIT5",
-                "type": "png"
-            }, 
-            {
-                "file": "images/6_med_r.png",
-                "name": "MEDIUMREDDIGIT6",
-                "type": "png"
-            }, 
-            {
-                "file": "images/7_med_r.png",
-                "name": "MEDIUMREDDIGIT7",
-                "type": "png"
-            }, 
-            {
-                "file": "images/8_med_r.png",
-                "name": "MEDIUMREDDIGIT8",
-                "type": "png"
-            },           
-            {
-                "file": "images/9_med_r.png",
-                "name": "MEDIUMREDDIGIT9",
-                "type": "png"
-            }, 
-            {
-                "file": "images/0_med_r.png",
-                "name": "MEDIUMREDDIGIT0",
-                "type": "png"
-            },                
-            {
-                "file": "images/1_med_k.png",
-                "name": "MEDIUMBLACKDIGIT1",
-                "type": "png"
-            },  
-            {
-                "file": "images/2_med_k.png",
-                "name": "MEDIUMBLACKDIGIT2",
-                "type": "png"
-            }, 
-            {
-                "file": "images/3_med_k.png",
-                "name": "MEDIUMBLACKDIGIT3",
-                "type": "png"
-            },     
-            {
-                "file": "images/4_med_k.png",
-                "name": "MEDIUMBLACKDIGIT4",
-                "type": "png"
-            }, 
-            {
-                "file": "images/5_med_k.png",
-                "name": "MEDIUMBLACKDIGIT5",
-                "type": "png"
-            }, 
-            {
-                "file": "images/6_med_k.png",
-                "name": "MEDIUMBLACKDIGIT6",
-                "type": "png"
-            }, 
-            {
-                "file": "images/7_med_k.png",
-                "name": "MEDIUMBLACKDIGIT7",
-                "type": "png"
-            }, 
-            {
-                "file": "images/8_med_k.png",
-                "name": "MEDIUMBLACKDIGIT8",
-                "type": "png"
-            },           
-            {
-                "file": "images/9_med_k.png",
-                "name": "MEDIUMBLACKDIGIT9",
-                "type": "png"
-            }, 
-            {
-                "file": "images/0_med_k.png",
-                "name": "MEDIUMBLACKDIGIT0",
-                "type": "png"
-            },      
-            {
-                "file": "images/colon_med_r.png",
-                "name": "MEDIUMREDCOLON",
-                "type": "png"
-            },  
-            {
-                "file": "images/colon_med_k.png",
-                "name": "MEDIUMBLACKCOLON",
-                "type": "png"
-            },     
-            {
-                "file": "images/1_sm_r.png",
-                "name": "SMALLREDDIGIT1",
-                "type": "png"
-            },  
-            {
-                "file": "images/2_sm_r.png",
-                "name": "SMALLREDDIGIT2",
-                "type": "png"
-            }, 
-            {
-                "file": "images/3_sm_r.png",
-                "name": "SMALLREDDIGIT3",
-                "type": "png"
-            },     
-            {
-                "file": "images/4_sm_r.png",
-                "name": "SMALLREDDIGIT4",
-                "type": "png"
-            }, 
-            {
-                "file": "images/5_sm_r.png",
-                "name": "SMALLREDDIGIT5",
-                "type": "png"
-            }, 
-            {
-                "file": "images/6_sm_r.png",
-                "name": "SMALLREDDIGIT6",
-                "type": "png"
-            }, 
-            {
-                "file": "images/7_sm_r.png",
-                "name": "SMALLREDDIGIT7",
-                "type": "png"
-            }, 
-            {
-                "file": "images/8_sm_r.png",
-                "name": "SMALLREDDIGIT8",
-                "type": "png"
-            },           
-            {
-                "file": "images/9_sm_r.png",
-                "name": "SMALLREDDIGIT9",
-                "type": "png"
-            }, 
-            {
-                "file": "images/0_sm_r.png",
-                "name": "SMALLREDDIGIT0",
-                "type": "png"
-            },                
-            {
-                "file": "images/1_sm_k.png",
-                "name": "SMALLBLACKDIGIT1",
-                "type": "png"
-            },  
-            {
-                "file": "images/2_sm_k.png",
-                "name": "SMALLBLACKDIGIT2",
-                "type": "png"
-            }, 
-            {
-                "file": "images/3_sm_k.png",
-                "name": "SMALLBLACKDIGIT3",
-                "type": "png"
-            },     
-            {
-                "file": "images/4_sm_k.png",
-                "name": "SMALLBLACKDIGIT4",
-                "type": "png"
-            }, 
+            },
             {
                 "file": "images/5_sm_k.png",
                 "name": "SMALLBLACKDIGIT5",
                 "type": "png"
-            }, 
+            },
             {
-                "file": "images/6_sm_k.png",
-                "name": "SMALLBLACKDIGIT6",
+                "file": "images/4.png",
+                "name": "DIGIT4",
                 "type": "png"
-            }, 
+            },
             {
-                "file": "images/7_sm_k.png",
-                "name": "SMALLBLACKDIGIT7",
+                "file": "images/5.png",
+                "name": "DIGIT5",
                 "type": "png"
-            }, 
+            },
             {
                 "file": "images/8_sm_k.png",
                 "name": "SMALLBLACKDIGIT8",
                 "type": "png"
-            },           
+            },
+            {
+                "file": "images/sat.png",
+                "name": "SAT",
+                "type": "png"
+            },
+            {
+                "file": "images/8_med_k.png",
+                "name": "MEDIUMBLACKDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/6_sm_r.png",
+                "name": "SMALLREDDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/7_med_r.png",
+                "name": "MEDIUMREDDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/4_med.png",
+                "name": "MEDIUMDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/6_med_k.png",
+                "name": "MEDIUMBLACKDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/0_med.png",
+                "name": "MEDIUMDIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/colon_med_r.png",
+                "name": "MEDIUMREDCOLON",
+                "type": "png"
+            },
+            {
+                "file": "images/8_sm_r.png",
+                "name": "SMALLREDDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/colon_med.png",
+                "name": "MEDIUMCOLON",
+                "type": "png"
+            },
+            {
+                "file": "images/8_med_r.png",
+                "name": "MEDIUMREDDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/7_sm.png",
+                "name": "SMALLDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/tue.png",
+                "name": "TUE",
+                "type": "png"
+            },
+            {
+                "file": "images/1_sm.png",
+                "name": "SMALLDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/7_sm_r.png",
+                "name": "SMALLREDDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/5_med.png",
+                "name": "MEDIUMDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/6_sm.png",
+                "name": "SMALLDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/bt2.png",
+                "name": "BT2",
+                "type": "png"
+            },
+            {
+                "file": "images/6_med.png",
+                "name": "MEDIUMDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/4_med_r.png",
+                "name": "MEDIUMREDDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/fri.png",
+                "name": "FRI",
+                "type": "png"
+            },
+            {
+                "file": "images/0.png",
+                "name": "DIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/2_med_k.png",
+                "name": "MEDIUMBLACKDIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/3_med_k.png",
+                "name": "MEDIUMBLACKDIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/8_sm.png",
+                "name": "SMALLDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/2_med_r.png",
+                "name": "MEDIUMREDDIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/bg2.png",
+                "name": "BG2",
+                "type": "png"
+            },
+            {
+                "file": "images/1_sm_r.png",
+                "name": "SMALLREDDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/wed.png",
+                "name": "WED",
+                "type": "png"
+            },
+            {
+                "file": "images/0_sm_r.png",
+                "name": "SMALLREDDIGIT0",
+                "type": "png"
+            },
             {
                 "file": "images/9_sm_k.png",
                 "name": "SMALLBLACKDIGIT9",
                 "type": "png"
-            }, 
+            },
             {
-                "file": "images/0_sm_k.png",
-                "name": "SMALLBLACKDIGIT0",
+                "file": "images/1B.png",
+                "name": "DIGIT1B",
                 "type": "png"
-            }                                                                                                                                               
+            },
+            {
+                "file": "images/6_sm_k.png",
+                "name": "SMALLBLACKDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/9.png",
+                "name": "DIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/4_sm_k.png",
+                "name": "SMALLBLACKDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/7B.png",
+                "name": "DIGIT7B",
+                "type": "png"
+            },
+            {
+                "file": "images/9_med.png",
+                "name": "MEDIUMDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/2_sm_k.png",
+                "name": "SMALLBLACKDIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/6_med_r.png",
+                "name": "MEDIUMREDDIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/0_med_r.png",
+                "name": "MEDIUMREDDIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/9_sm.png",
+                "name": "SMALLDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/0_sm.png",
+                "name": "SMALLDIGIT0",
+                "type": "png"
+            },
+            {
+                "file": "images/sun.png",
+                "name": "SUN",
+                "type": "png"
+            },
+            {
+                "file": "images/1.png",
+                "name": "DIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/1_sm_k.png",
+                "name": "SMALLBLACKDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/3_sm.png",
+                "name": "SMALLDIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/4B.png",
+                "name": "DIGIT4B",
+                "type": "png"
+            },
+            {
+                "file": "images/slash.png",
+                "name": "SLASH",
+                "type": "png"
+            },
+            {
+                "file": "images/2.png",
+                "name": "DIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/5_med_k.png",
+                "name": "MEDIUMBLACKDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/degree.png",
+                "name": "DEGREE",
+                "type": "png"
+            },
+            {
+                "file": "images/3_med.png",
+                "name": "MEDIUMDIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/9_med_k.png",
+                "name": "MEDIUMBLACKDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/9_sm_r.png",
+                "name": "SMALLREDDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/3_sm_r.png",
+                "name": "SMALLREDDIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/1_med_k.png",
+                "name": "MEDIUMBLACKDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/1_med_r.png",
+                "name": "MEDIUMREDDIGIT1",
+                "type": "png"
+            },
+            {
+                "file": "images/7_sm_k.png",
+                "name": "SMALLBLACKDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/5_sm_r.png",
+                "name": "SMALLREDDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/5_med_r.png",
+                "name": "MEDIUMREDDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/thu.png",
+                "name": "THU",
+                "type": "png"
+            },
+            {
+                "file": "images/2B.png",
+                "name": "DIGIT2B",
+                "type": "png"
+            },
+            {
+                "file": "images/9_med_r.png",
+                "name": "MEDIUMREDDIGIT9",
+                "type": "png"
+            },
+            {
+                "file": "images/5_sm.png",
+                "name": "SMALLDIGIT5",
+                "type": "png"
+            },
+            {
+                "file": "images/6.png",
+                "name": "DIGIT6",
+                "type": "png"
+            },
+            {
+                "file": "images/4_sm_r.png",
+                "name": "SMALLREDDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/2_sm_r.png",
+                "name": "SMALLREDDIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/3_sm_k.png",
+                "name": "SMALLBLACKDIGIT3",
+                "type": "png"
+            },
+            {
+                "file": "images/2_sm.png",
+                "name": "SMALLDIGIT2",
+                "type": "png"
+            },
+            {
+                "file": "images/7_med_k.png",
+                "name": "MEDIUMBLACKDIGIT7",
+                "type": "png"
+            },
+            {
+                "file": "images/4_sm.png",
+                "name": "SMALLDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/bg1.png",
+                "name": "BG1",
+                "type": "png"
+            },
+            {
+                "file": "images/mon.png",
+                "name": "MON",
+                "type": "png"
+            },
+            {
+                "file": "images/4_med_k.png",
+                "name": "MEDIUMBLACKDIGIT4",
+                "type": "png"
+            },
+            {
+                "file": "images/colon_med_k.png",
+                "name": "MEDIUMBLACKCOLON",
+                "type": "png"
+            },
+            {
+                "file": "images/8_med.png",
+                "name": "MEDIUMDIGIT8",
+                "type": "png"
+            },
+            {
+                "file": "images/bt1.png",
+                "name": "BT1",
+                "type": "png"
+            },
+            {
+                "file": "images/3_med_r.png",
+                "name": "MEDIUMREDDIGIT3",
+                "type": "png"
+            }
         ]
     },
     "sdkVersion": "3",

@@ -33,7 +33,6 @@ static int color;
 static int tap_counter = -1;
 static bool clock_ready = false;
 
-AppTimer *timer;
 const int delta = 40;
 
 static void fillPixel(Layer *layer, int16_t i, int16_t j, GContext *ctx){
@@ -86,10 +85,9 @@ static void set_container_image(GBitmap **bmp_image, BitmapLayer *bmp_layer, con
 static void set_container_replace_color(GBitmap **bmp_image, BitmapLayer *bmp_layer, const int resource_id, uint8_t x, uint8_t  y, int color) {
 
   set_container_image(bmp_image, bmp_layer, resource_id, x, y);
-  replace_gbitmap_color(GColorDukeBlue, (GColor)COLOR_SETS[color][2], *bmp_image, bmp_layer);  
-  replace_gbitmap_color(GColorBlue, (GColor)COLOR_SETS[color][1], *bmp_image, bmp_layer);  
-  replace_gbitmap_color(GColorBlueMoon, (GColor)COLOR_SETS[color][0], *bmp_image, bmp_layer);  
-
+  GColor colors_to_replace[] = {GColorDukeBlue, GColorBlue, GColorBlueMoon};
+  GColor replace_colors[] = {(GColor)COLOR_SETS[color][2],(GColor)COLOR_SETS[color][1],(GColor)COLOR_SETS[color][0]};
+  replace_gbitmap_colors(colors_to_replace, replace_colors, 3, *bmp_image, bmp_layer);  
 }
 
 static BitmapLayer* create_bitmap_layer(GBitmap *bitmap, Layer *window_layer,
@@ -98,7 +96,6 @@ static BitmapLayer* create_bitmap_layer(GBitmap *bitmap, Layer *window_layer,
     BitmapLayer* bmp_layer = bitmap_layer_create(frame);
     bitmap_layer_set_background_color(bmp_layer,GColorBlack);
     bitmap_layer_set_bitmap(bmp_layer, bitmap);  
-    //replace_gbitmap_color(GColorOxfordBlue, GColorBlack, bitmap, bmp_layer);  
     layer_add_child(window_layer, bitmap_layer_get_layer(bmp_layer));  
     return bmp_layer;
 }
@@ -125,6 +122,42 @@ static void swap(uint8_t *i, uint8_t *j) {
    *j = t;
 }
 
+static void update_hours(struct tm* t){
+  uint8_t hr = t->tm_hour;
+
+  uint8_t h1 = (((hr+11)%12)+1)/10;
+  uint8_t h2 = (((hr+11)%12)+1)%10;
+ 
+  int x = RECTWIDTH;
+  int y = 15*RECTWIDTH;
+
+/*	set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h1], x, y);  
+	set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h2], x + 6*RECTWIDTH, y);  
+	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], COLON_RESOURCE_IDS[color], x + 11*RECTWIDTH, y);  
+  */
+  set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y, color);  	
+       APP_LOG(APP_LOG_LEVEL_ERROR, "doing hours");
+
+}
+
+static void update_minutes(struct tm* t){
+  uint8_t min = t->tm_min;
+
+  uint8_t m1 = min/10;
+  uint8_t m2 = min%10; 
+  int x = RECTWIDTH;
+  int y = 15*RECTWIDTH;
+    
+ /* set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m1], x + 15*RECTWIDTH, y);  
+	set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m2], x + 21*RECTWIDTH, y);    
+*/
+  set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y, color);    
+    APP_LOG(APP_LOG_LEVEL_ERROR, "doing minutes");
+   
+}
 
 
 static void time_update_proc(Layer *layer, GContext *ctx) {
@@ -133,55 +166,23 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
   struct tm *t = localtime(&now);
   
   uint8_t sec = t->tm_sec;
-  uint8_t min = t->tm_min;
-  uint8_t hr = t->tm_hour;
-
-  uint8_t h1 = (hr%12)/10;
-  uint8_t h2 = (hr%12)%10;
   uint8_t s1 = sec/10;
-  uint8_t s2 = sec%10;
-  uint8_t m1 = min/10;
-  uint8_t m2 = min%10; 
-  int x = RECTWIDTH;
-  int y = 15*RECTWIDTH;
+  uint8_t s2 = sec%10;  
+  int x = 28*RECTWIDTH;
+  int y = 18*RECTWIDTH;
   
-  if(sec == 0 || s_time_digits_bitmap[1] == NULL){
-    if(min == 0 || s_time_digits_bitmap[1] == NULL){
-	    set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y);  
-	    set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y);  
-    }
-    set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y);  
-	  set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y);    
-  }
-  set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x + 27*RECTWIDTH, y+3*RECTWIDTH);    
-	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 31*RECTWIDTH, y+3*RECTWIDTH);    
-	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y);  
-
-  
-	/*set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y, color);    
-  set_container_replace_color(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x + 27*RECTWIDTH, y+3*RECTWIDTH,color);    
-	set_container_replace_color(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 31*RECTWIDTH, y+3*RECTWIDTH,color);    
+  /*set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s1], x, y);    
+	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s2], x + 4*RECTWIDTH, y);    
   */
-
+  set_container_replace_color(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x, y,color);    
+	set_container_replace_color(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 4*RECTWIDTH, y,color);    
+   
   // Draw PM
   if(t->tm_hour >= 12){  
     graphics_context_set_fill_color(ctx, GColorYellow); 
-    draw_shape(layer, PM_POINTS.points, PM_POINTS.num_points, WIDTH-10, WIDTH-2, ctx);  
+    draw_shape(layer, PM_POINTS.points, PM_POINTS.num_points, 27,14, ctx);  
   }    
   
-}
-
-void timer_callback(void *data) {
-    if(!clock_ready){
-      layer_mark_dirty(s_time_layer);
- 
-      //Register next execution
-      timer = app_timer_register(delta, (AppTimerCallback) timer_callback, NULL);
-    }
 }
 
 static void battery_update_proc(Layer *layer, GContext *ctx) {  
@@ -303,11 +304,16 @@ static void tap_handler(AccelAxisType axis, int32_t direction) {
 }
 
 static void handle_second_tick(struct tm *t, TimeUnits units_changed) {
-  if(clock_ready){
-    if((!hide_second_hand && (units_changed & SECOND_UNIT)) || (units_changed & MINUTE_UNIT)){
-        layer_mark_dirty(s_time_layer);
-    }
+
+  if((!hide_second_hand && (units_changed & SECOND_UNIT))){
+    layer_mark_dirty(s_time_layer);
   }
+  if(s_time_digits_bitmap[3] == NULL || (units_changed & MINUTE_UNIT)){  
+    update_minutes(t);
+  }
+  if(s_time_digits_bitmap[1] == NULL || (units_changed & HOUR_UNIT)){
+    update_hours(t);
+  }    
   if(units_changed & DAY_UNIT){
       update_date();
   }
@@ -323,7 +329,7 @@ static void handle_second_tick(struct tm *t, TimeUnits units_changed) {
       show_tap_display(false);
     }
     tap_counter--;
-  }  
+  }
 }
 
 static void parse_config_message(DictionaryIterator *iterator, void *context){
@@ -371,7 +377,10 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
     t = dict_read_next(iterator);
   }
   
-  layer_mark_dirty(s_time_layer);
+  time_t now = time(NULL);
+  update_minutes(localtime(&now));
+  update_hours(localtime(&now));  
+  layer_mark_dirty(s_time_layer); 
 }
 
 static void parse_weather_message(DictionaryIterator *iterator, void *context){
@@ -551,6 +560,10 @@ static void main_window_unload(Window *window) {
     destroy_bitmap_layer(s_temp_digits_layer[i], s_temp_digits_bitmap[i] );    
   }  
   
+  for(int i = 0; i < 7; i++){
+    destroy_bitmap_layer(s_time_digits_layer[i], s_time_digits_bitmap[i] );    
+  } 
+  
   destroy_bitmap_layer(s_bt_img_layer, s_bt_img_bitmap);   
   destroy_bitmap_layer(s_day_layer, s_day_bitmap);        
   
@@ -572,7 +585,11 @@ static void init() {
   date_format = DDMM_DATE_FORMAT;
   hide_second_hand = false;
   show_animation = true;  
+  color = WHITE;
   
+  if(persist_exists(KEY_SECOND_COLOR)){
+    color = persist_read_int(KEY_SECOND_COLOR);
+  }  
   if(persist_exists(KEY_TEMP_SCALE)){
     temp_scale = persist_read_int(KEY_TEMP_SCALE);
   }
@@ -615,11 +632,9 @@ static void init() {
   bluetooth_connection_service_subscribe(bt_handler);  
   
   
-  if(show_animation){
-    timer = app_timer_register(delta, (AppTimerCallback) timer_callback, NULL); 
-  }else{
-    clock_ready = true;
-  }
+
+  clock_ready = true;
+  
   app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
 }
 
