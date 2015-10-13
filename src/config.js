@@ -7,12 +7,10 @@ function updateMenu(conf){
     dict['KEY_HIDE_SECONDS'] = configData['hide_seconds'];
   }*/
   dict['isWeather'] = 0;
-  dict['KEY_HOUR_COLOR'] = parseInt(configData['hour_color']);
-  dict['KEY_SECOND_COLOR'] = parseInt(configData['second_color']);
-  dict['KEY_MINUTE_COLOR'] = parseInt(configData['minute_color']);
+  dict['KEY_TIME_COLOR'] = parseInt(configData['second_color']);
   dict['KEY_TEMP_SCALE'] = parseInt(configData['temp_scale']);  
   dict['KEY_BT_LOGO_TYPE'] = parseInt(configData['bt_logo']);
-  dict['KEY_SHOW_ANIMATION'] = parseInt(configData['show_animation']);
+  dict['KEY_LARGE_DIGITS'] = parseInt(configData['show_animation']);
   dict['KEY_HIDE_SECONDS'] = parseInt(configData['hide_seconds']);
   
 

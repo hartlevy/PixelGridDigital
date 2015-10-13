@@ -29,6 +29,7 @@ static int date_format;
 static bool hide_second_hand;
 static bool show_animation;
 static int color;
+static bool use_large_digits;
 
 static int tap_counter = -1;
 static bool clock_ready = false;
@@ -63,7 +64,6 @@ static void setColorShade(float c, uint8_t color, GContext *ctx){
 
 static void set_container_image(GBitmap **bmp_image, BitmapLayer *bmp_layer, const int resource_id, uint8_t x, uint8_t  y) {
   GBitmap *old_image = *bmp_image;
-  //*bmp_image = gbitmap_create_with_palette(COLOUR_USER, resource_id);
   *bmp_image = gbitmap_create_with_resource(resource_id);
   
   GPoint origin = { .x = x, .y = y};
@@ -130,16 +130,24 @@ static void update_hours(struct tm* t){
  
   int x = RECTWIDTH;
   int y = 15*RECTWIDTH;
+  int n = 6;
+  int colonId = RESOURCE_ID_MEDIUMCOLON;
 
+  const int* digitArray  = MED_DIGIT_IMAGE_RESOURCE_IDS;
+  if(use_large_digits){
+    digitArray = LRG_DIGIT_IMAGE_RESOURCE_IDS;
+    n = 7;
+    x = 3*RECTWIDTH;
+    y = 13*RECTWIDTH;    
+    colonId = RESOURCE_ID_LARGECOLON;
+  }  
 /*	set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h1], x, y);  
 	set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h2], x + 6*RECTWIDTH, y);  
 	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], COLON_RESOURCE_IDS[color], x + 11*RECTWIDTH, y);  
   */
-  set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[h1], x, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[h2], x + 6*RECTWIDTH, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], RESOURCE_ID_MEDIUMCOLON, x + 11*RECTWIDTH, y, color);  	
-       APP_LOG(APP_LOG_LEVEL_ERROR, "doing hours");
-
+  set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], digitArray[h1], x, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], digitArray[h2], x + n*RECTWIDTH, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], colonId, x + 2*n*RECTWIDTH, y, color);  	
 }
 
 static void update_minutes(struct tm* t){
@@ -147,16 +155,22 @@ static void update_minutes(struct tm* t){
 
   uint8_t m1 = min/10;
   uint8_t m2 = min%10; 
-  int x = RECTWIDTH;
+  int x = 16*RECTWIDTH;
   int y = 15*RECTWIDTH;
-    
+  int n = 6;
  /* set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m1], x + 15*RECTWIDTH, y);  
 	set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m2], x + 21*RECTWIDTH, y);    
 */
-  set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[m1], x + 15*RECTWIDTH, y, color);  
-	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[m2], x + 21*RECTWIDTH, y, color);    
-    APP_LOG(APP_LOG_LEVEL_ERROR, "doing minutes");
-   
+  
+  const int* digitArray  = MED_DIGIT_IMAGE_RESOURCE_IDS;
+  if(use_large_digits){
+    digitArray = LRG_DIGIT_IMAGE_RESOURCE_IDS;
+    n = 7;
+    x = 21*RECTWIDTH;
+    y = 13*RECTWIDTH;    
+  }
+  set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], digitArray[m1], x, y, color);  
+	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], digitArray[m2], x + n*RECTWIDTH, y, color);       
 }
 
 
@@ -170,17 +184,45 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
   uint8_t s2 = sec%10;  
   int x = 28*RECTWIDTH;
   int y = 18*RECTWIDTH;
+  int n = 4;
+  int pm_x = 27;
+  int pm_y = 14;
   
   /*set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s1], x, y);    
 	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s2], x + 4*RECTWIDTH, y);    
   */
-  set_container_replace_color(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[s1], x, y,color);    
-	set_container_replace_color(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[s2], x + 4*RECTWIDTH, y,color);    
-   
+  
+  const int* digitArray  = SM_DIGIT_IMAGE_RESOURCE_IDS;
+  if(use_large_digits){
+    digitArray = MED_DIGIT_IMAGE_RESOURCE_IDS;
+    n = 6;
+    x = 22*RECTWIDTH;
+    y = 23*RECTWIDTH;
+    pm_x = 23;
+    pm_y = 9;
+  }  
+  
+  if(hide_second_hand){
+    if(!layer_get_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]))){
+      layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]),true);
+      layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layer[6]),true);      
+    }
+    if(!use_large_digits){
+      pm_y += 1;
+    }
+  }else{
+    if(layer_get_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]))){
+      layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]),false);
+      layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layer[6]),false);         
+    }    
+    set_container_replace_color(&s_time_digits_bitmap[5], s_time_digits_layer[5], digitArray[s1], x, y,color);    
+	  set_container_replace_color(&s_time_digits_bitmap[6], s_time_digits_layer[6], digitArray[s2], x + n*RECTWIDTH, y,color);    
+  }
+  
   // Draw PM
   if(t->tm_hour >= 12){  
     graphics_context_set_fill_color(ctx, GColorYellow); 
-    draw_shape(layer, PM_POINTS.points, PM_POINTS.num_points, 27,14, ctx);  
+    draw_shape(layer, PM_POINTS.points, PM_POINTS.num_points, pm_x, pm_y, ctx);  
   }    
   
 }
@@ -361,9 +403,9 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
       }      
       persist_write_int(KEY_TEMP_SCALE, temp_scale);            
       break;      
-    case KEY_SHOW_ANIMATION:
-      show_animation = (int)(t->value->int32);
-      persist_write_bool(KEY_SHOW_ANIMATION,show_animation);
+    case KEY_LARGE_DIGITS:
+      use_large_digits = (int)(t->value->int32);
+      persist_write_bool(KEY_LARGE_DIGITS, use_large_digits);
       break;   
     case KEY_SECOND_COLOR:
       color = (int)t->value->int32;
@@ -584,8 +626,8 @@ static void init() {
   temp_scale = CELSIUS_SCALE; 
   date_format = DDMM_DATE_FORMAT;
   hide_second_hand = false;
-  show_animation = true;  
   color = WHITE;
+  use_large_digits = true;  
   
   if(persist_exists(KEY_SECOND_COLOR)){
     color = persist_read_int(KEY_SECOND_COLOR);
@@ -596,8 +638,8 @@ static void init() {
   if(persist_exists(KEY_BT_LOGO_TYPE)){
       bt_image_type = persist_read_int(KEY_BT_LOGO_TYPE);
   }
-  if(persist_exists(KEY_SHOW_ANIMATION)){
-    show_animation = persist_read_bool(KEY_SHOW_ANIMATION);
+  if(persist_exists(KEY_LARGE_DIGITS)){
+    use_large_digits = persist_read_bool(KEY_LARGE_DIGITS);
   }  
   if(persist_exists(KEY_HIDE_SECONDS)){
     hide_second_hand = persist_read_bool(KEY_HIDE_SECONDS);
