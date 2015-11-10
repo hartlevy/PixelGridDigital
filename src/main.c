@@ -27,9 +27,10 @@ static int bt_image_type;
 static int temp_scale;
 static int date_format;
 static bool hide_second_hand;
-static bool show_animation;
 static int color;
 static bool use_large_digits;
+static int weather_mode;
+static bool got_weather = false;
 
 static int tap_counter = -1;
 static bool clock_ready = false;
@@ -128,8 +129,16 @@ static void update_hours(struct tm* t){
   uint8_t h1 = (((hr+11)%12)+1)/10;
   uint8_t h2 = (((hr+11)%12)+1)%10;
  
+  if(clock_is_24h_style() == true){
+    h1 = hr/10;
+    h2 = hr%10;
+  }
   int x = RECTWIDTH;
   int y = 15*RECTWIDTH;
+  #if defined(PBL_ROUND)
+  x = 6*RECTWIDTH;
+  y = 18*RECTWIDTH;
+  #endif
   int n = 6;
   int colonId = RESOURCE_ID_MEDIUMCOLON;
 
@@ -138,13 +147,17 @@ static void update_hours(struct tm* t){
     digitArray = LRG_DIGIT_IMAGE_RESOURCE_IDS;
     n = 7;
     x = 3*RECTWIDTH;
-    y = 13*RECTWIDTH;    
+    y = 13*RECTWIDTH;
+    #if defined(PBL_ROUND)
+    x = RECTWIDTH;
+    y = 18*RECTWIDTH;
+    if(hide_second_hand){
+      x += 3*RECTWIDTH;
+    }    
+    #endif    
     colonId = RESOURCE_ID_LARGECOLON;
   }  
-/*	set_container_image(&s_time_digits_bitmap[0], s_time_digits_layer[0], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h1], x, y);  
-	set_container_image(&s_time_digits_bitmap[1], s_time_digits_layer[1], MED_DIGIT_IMAGE_RESOURCE_IDS[color][h2], x + 6*RECTWIDTH, y);  
-	set_container_image(&s_time_digits_bitmap[2], s_time_digits_layer[2], COLON_RESOURCE_IDS[color], x + 11*RECTWIDTH, y);  
-  */
+
   set_container_replace_color(&s_time_digits_bitmap[0], s_time_digits_layer[0], digitArray[h1], x, y, color);  
 	set_container_replace_color(&s_time_digits_bitmap[1], s_time_digits_layer[1], digitArray[h2], x + n*RECTWIDTH, y, color);  
 	set_container_replace_color(&s_time_digits_bitmap[2], s_time_digits_layer[2], colonId, x + 2*n*RECTWIDTH, y, color);  	
@@ -157,17 +170,25 @@ static void update_minutes(struct tm* t){
   uint8_t m2 = min%10; 
   int x = 16*RECTWIDTH;
   int y = 15*RECTWIDTH;
+  #if defined(PBL_ROUND)
+  x = 21*RECTWIDTH;
+  y = 18*RECTWIDTH;
+  #endif  
   int n = 6;
- /* set_container_image(&s_time_digits_bitmap[3], s_time_digits_layer[3], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m1], x + 15*RECTWIDTH, y);  
-	set_container_image(&s_time_digits_bitmap[4], s_time_digits_layer[4], MED_DIGIT_IMAGE_RESOURCE_IDS[color][m2], x + 21*RECTWIDTH, y);    
-*/
   
   const int* digitArray  = MED_DIGIT_IMAGE_RESOURCE_IDS;
   if(use_large_digits){
     digitArray = LRG_DIGIT_IMAGE_RESOURCE_IDS;
     n = 7;
     x = 21*RECTWIDTH;
-    y = 13*RECTWIDTH;    
+    y = 13*RECTWIDTH; 
+    #if defined(PBL_ROUND)
+    x = 19*RECTWIDTH;
+    y = 18*RECTWIDTH;
+    if(hide_second_hand){
+      x += 3*RECTWIDTH;
+    }
+    #endif      
   }
   set_container_replace_color(&s_time_digits_bitmap[3], s_time_digits_layer[3], digitArray[m1], x, y, color);  
 	set_container_replace_color(&s_time_digits_bitmap[4], s_time_digits_layer[4], digitArray[m2], x + n*RECTWIDTH, y, color);       
@@ -185,8 +206,12 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
   int x = 28*RECTWIDTH;
   int y = 18*RECTWIDTH;
   int n = 4;
-  int pm_x = 27;
-  int pm_y = 14;
+  #if defined(PBL_ROUND)
+  x = 33*RECTWIDTH;
+  y = 21*RECTWIDTH;
+  #endif  
+  int pm_x = x/RECTWIDTH - 1;
+  int pm_y = y/RECTWIDTH - 4;  
   
   /*set_container_image(&s_time_digits_bitmap[5], s_time_digits_layer[5], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s1], x, y);    
 	set_container_image(&s_time_digits_bitmap[6], s_time_digits_layer[6], SM_DIGIT_IMAGE_RESOURCE_IDS[color][s2], x + 4*RECTWIDTH, y);    
@@ -198,8 +223,15 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
     n = 6;
     x = 22*RECTWIDTH;
     y = 23*RECTWIDTH;
-    pm_x = 23;
-    pm_y = 9;
+    pm_x = x/RECTWIDTH + 1;
+    pm_y = y/RECTWIDTH - 14;    
+    #if defined(PBL_ROUND)
+    x = 33*RECTWIDTH;
+    y = 20*RECTWIDTH;
+    pm_x = x/RECTWIDTH - 1;    
+    pm_y = y/RECTWIDTH - 4;        
+    #endif      
+
   }  
   
   if(hide_second_hand){
@@ -209,7 +241,13 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
     }
     if(!use_large_digits){
       pm_y += 1;
+    }else{
+      #if defined(PBL_ROUND)
+      pm_y += 2;     
+      pm_x += 3;
+      #endif
     }
+    
   }else{
     if(layer_get_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]))){
       layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layer[5]),false);
@@ -220,10 +258,13 @@ static void time_update_proc(Layer *layer, GContext *ctx) {
   }
   
   // Draw PM
-  if(t->tm_hour >= 12){  
+  if(clock_is_24h_style()==false && t->tm_hour >= 12){  
     graphics_context_set_fill_color(ctx, GColorYellow); 
     draw_shape(layer, PM_POINTS.points, PM_POINTS.num_points, pm_x, pm_y, ctx);  
-  }    
+  }else if(clock_is_24h_style()==true){  
+    graphics_context_set_fill_color(ctx, GColorYellow); 
+    draw_shape(layer, MT_POINTS.points, MT_POINTS.num_points, pm_x, pm_y, ctx);  
+  }   
   
 }
 
@@ -281,7 +322,12 @@ static void update_bt_img(bool connected) {
 
 static void update_date(){
   uint8_t x = 0;//(WIDTH-19)*RECTWIDTH;
-  uint8_t y = 0;//;(WIDTH + 2)*RECTWIDTH;  
+  uint8_t y = 0;//;(WIDTH + 2)*RECTWIDTH; 
+  
+  uint8_t day_pos = 6;
+  #if defined(PBL_ROUND)
+  day_pos = 3;
+  #endif
   GPoint origin = layer_get_frame(s_date_layer).origin;
   
   time_t now = time(NULL);
@@ -304,7 +350,7 @@ static void update_date(){
 	set_container_image(&s_date_digits_bitmap[3], s_date_digits_layer[3], DIGIT_IMAGE_RESOURCE_IDS[m1], x + 11*RECTWIDTH, y);  
 	set_container_image(&s_date_digits_bitmap[4], s_date_digits_layer[4], DIGIT_IMAGE_RESOURCE_IDS[m2], x + 15*RECTWIDTH, y);    
 
-	set_container_image(&s_day_bitmap, s_day_layer, DAY_NAME_IMAGE_RESOURCE_IDS[wday], origin.x+6*RECTWIDTH, origin.y);    
+	set_container_image(&s_day_bitmap, s_day_layer, DAY_NAME_IMAGE_RESOURCE_IDS[wday], origin.x+day_pos*RECTWIDTH, origin.y);    
 }
 
 
@@ -360,10 +406,10 @@ static void handle_second_tick(struct tm *t, TimeUnits units_changed) {
       update_date();
   }
   
-  // Get weather update every 30 minutes
-  if(t->tm_min % 30 == 0 && t->tm_sec % 60 == 0) {
+  // Get weather update every 30*weather_mode minutes
+  if((got_weather == false  || (t->tm_min % 30*weather_mode == 0 && t->tm_sec % 60 == 0 && weather_mode < 3)) && weather_mode > 0 ) {
     request_temperature();
-  }  
+  }   
   
   if(tap_counter >= 0){
     if(tap_counter == 0){
@@ -378,7 +424,6 @@ static void parse_config_message(DictionaryIterator *iterator, void *context){
   
   Tuple *t = dict_read_first(iterator);
   
-APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");  
     // For all items
   while(t != NULL) {
     // Which key was received?
@@ -410,7 +455,21 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
     case KEY_SECOND_COLOR:
       color = (int)t->value->int32;
       persist_write_int(KEY_SECOND_COLOR, color);                                       
-      break;      
+      break;  
+    case KEY_WEATHER_MODE:
+      if(weather_mode == 0 && (int)t->value->int32 > 0){
+        request_temperature();
+      }
+      weather_mode = (int)t->value->int32;              
+      persist_write_int(KEY_WEATHER_MODE, weather_mode);   
+      break;  
+    case KEY_DATE_FORMAT:
+      if(date_format != (int)t->value->int32){
+        date_format = (int)t->value->int32;        
+        update_date();
+      }
+      persist_write_int(KEY_DATE_FORMAT, date_format);   
+      break;        
     default:
       APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
       break;
@@ -426,11 +485,15 @@ APP_LOG(APP_LOG_LEVEL_ERROR, "configgingg!!");
 }
 
 static void parse_weather_message(DictionaryIterator *iterator, void *context){
+  if(weather_mode == 0){
+    return;
+  }
   int temperature = 0;
   bool got_temperature = false;
   bool neg_temp = false;  
   
-      APP_LOG(APP_LOG_LEVEL_ERROR, "Getting weather");
+  APP_LOG(APP_LOG_LEVEL_INFO, "Getting weather");
+  got_weather = true;
   
   Tuple *t = dict_read_first(iterator);
 
@@ -454,7 +517,7 @@ static void parse_weather_message(DictionaryIterator *iterator, void *context){
     t = dict_read_next(iterator);
   }  
   
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Temp: %d", temperature);
+  APP_LOG(APP_LOG_LEVEL_INFO, "Temp: %d", temperature);
 
   if(got_temperature){
     if(temperature < 0){
@@ -467,21 +530,39 @@ static void parse_weather_message(DictionaryIterator *iterator, void *context){
     int t3 = temperature%10;
     
     int x = 0;
+    int y = 0;
+    #if defined(PBL_ROUND)
+    y = y + RECTWIDTH;    
+    if(t1 == 0 && !neg_temp){  
+      x = x + RECTWIDTH;
+    }
+    #endif
     if(t1 != 0){
-      set_container_image(&s_temp_digits_bitmap[0], s_temp_digits_layer[0], DIGIT_IMAGE_RESOURCE_IDS[t1], x, 0);  
+      set_container_image(&s_temp_digits_bitmap[0], s_temp_digits_layer[0], DIGIT_IMAGE_RESOURCE_IDS[t1], x, y);  
       x += 4*RECTWIDTH;
     } else if(neg_temp){
-      set_container_image(&s_temp_digits_bitmap[0], s_temp_digits_layer[0], RESOURCE_ID_NEGATIVE, x, 0);        
+      set_container_image(&s_temp_digits_bitmap[0], s_temp_digits_layer[0], RESOURCE_ID_NEGATIVE, x, y);        
       x += 4*RECTWIDTH;
     } else if(s_temp_digits_bitmap[0] != NULL){
       gbitmap_destroy(s_temp_digits_bitmap[0]);
       s_temp_digits_bitmap[0] = NULL;
+      bitmap_layer_set_bitmap(s_temp_digits_layer[0], NULL);      
     }
-    set_container_image(&s_temp_digits_bitmap[1], s_temp_digits_layer[1], DIGIT_IMAGE_RESOURCE_IDS[t2], x, 0);  
+    if(t2 != 0 || t1 != 0){
+      set_container_image(&s_temp_digits_bitmap[1], s_temp_digits_layer[1], DIGIT_IMAGE_RESOURCE_IDS[t2], x, y);  
+      x += 4*RECTWIDTH;  	
+    }
+    else{
+      x += 2*RECTWIDTH;
+      if(s_temp_digits_bitmap[1] != NULL){
+        gbitmap_destroy(s_temp_digits_bitmap[1]);
+        s_temp_digits_bitmap[1] = NULL;
+        bitmap_layer_set_bitmap(s_temp_digits_layer[1], NULL);
+      }
+    }	
+    set_container_image(&s_temp_digits_bitmap[2], s_temp_digits_layer[2], DIGIT_IMAGE_RESOURCE_IDS[t3], x, y);  
     x += 4*RECTWIDTH;  	
-    set_container_image(&s_temp_digits_bitmap[2], s_temp_digits_layer[2], DIGIT_IMAGE_RESOURCE_IDS[t3], x, 0);  
-    x += 4*RECTWIDTH;  	
-    set_container_image(&s_temp_digits_bitmap[3], s_temp_digits_layer[3], RESOURCE_ID_DEGREE, x, 0);          
+    set_container_image(&s_temp_digits_bitmap[3], s_temp_digits_layer[3], RESOURCE_ID_DEGREE, x, y);          
   }
 }
 
@@ -491,11 +572,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   //Tuple *config_tuple = dict_find(iterator, CONFIG_MESSAGE);
   
   if((int)weather_tuple->value->int32 == 1){
-    APP_LOG(APP_LOG_LEVEL_ERROR, "Get weather");
     parse_weather_message(iterator,  context);
   }
   else{
-    APP_LOG(APP_LOG_LEVEL_ERROR, "Get config");    
     parse_config_message(iterator,  context);
   }
 }
@@ -518,11 +597,28 @@ static void main_window_load(Window *window) {
   GRect bounds = layer_get_bounds(window_layer);
   GRect dummy_frame = { {0, 0}, {0, 0} };
   
+  uint8_t c_x = RECTWIDTH*(int)(bounds.size.w/(2*RECTWIDTH));
+  #if defined(PBL_ROUND)
+  int date_x = (WIDTH/2-8)*RECTWIDTH;
+  int date_y = (HEIGHT-7)*RECTWIDTH;
+  uint8_t bat_y = 2*RECTWIDTH;  
+  uint8_t bat_x = c_x - 6*RECTWIDTH; 
+  uint8_t bt_x = c_x - 3*RECTWIDTH;
+  uint8_t bt_y = c_x - RECTWIDTH*17;  
+  #elif defined(PBL_RECT)
+  int date_x = (WIDTH/2-1)*RECTWIDTH;
+  int date_y = (WIDTH+2)*RECTWIDTH; 
+  uint8_t bat_y = c_x + RECTWIDTH*21;  
+  uint8_t bat_x = RECTWIDTH;    
+  uint8_t bt_y = c_x + RECTWIDTH*14;  
+  uint8_t bt_x = RECTWIDTH;      
+  #endif 
+  
   //create bg layers
   s_bg_bitmap[0] = gbitmap_create_with_resource(RESOURCE_ID_BG1);  
-  s_bg_layer[0] = create_bitmap_layer(s_bg_bitmap[0], window_layer, 0,0,144,127);
+  s_bg_layer[0] = create_bitmap_layer(s_bg_bitmap[0], window_layer, 0,0,RECTWIDTH*WIDTH,127);
   s_bg_bitmap[1] = gbitmap_create_with_resource(RESOURCE_ID_BG2);   
-  s_bg_layer[1] = create_bitmap_layer(s_bg_bitmap[1], window_layer, 0,127,144,41);
+  s_bg_layer[1] = create_bitmap_layer(s_bg_bitmap[1], window_layer, 0,127,RECTWIDTH*WIDTH,RECTWIDTH*HEIGHT-127);
 
   
   //create time layer
@@ -535,10 +631,10 @@ static void main_window_load(Window *window) {
   for (int i = 0; i < 7; ++i) {
     s_time_digits_layer[i] = bitmap_layer_create(dummy_frame);
     layer_add_child(s_time_layer, bitmap_layer_get_layer(s_time_digits_layer[i]));
-  }    
+  }     
   
   //create date layer
-  s_date_layer = layer_create(GRect((WIDTH/2-1)*RECTWIDTH, (WIDTH+2)*RECTWIDTH,20*RECTWIDTH,4*RECTWIDTH));
+  s_date_layer = layer_create(GRect(date_x, date_y,20*RECTWIDTH,4*RECTWIDTH));  
   layer_add_child(window_layer, s_date_layer);
   
   memset(&s_date_digits_layer, 0, sizeof(s_date_digits_layer));
@@ -549,12 +645,12 @@ static void main_window_load(Window *window) {
   }
     
   //create day of week layer
-  s_day_layer = bitmap_layer_create(GRect((WIDTH/2-1)*RECTWIDTH, (WIDTH+2)*RECTWIDTH,20*RECTWIDTH,4*RECTWIDTH));
+  s_day_layer = bitmap_layer_create(GRect(date_x, date_y,20*RECTWIDTH,4*RECTWIDTH));
   layer_add_child(window_layer, bitmap_layer_get_layer(s_day_layer));
   layer_set_hidden(bitmap_layer_get_layer(s_day_layer), true);
   
   //create temperature layer
-  s_temp_layer = layer_create(GRect(2*RECTWIDTH, (WIDTH+2)*RECTWIDTH,16*RECTWIDTH,4*RECTWIDTH));
+  s_temp_layer = layer_create(GRect(bat_x + RECTWIDTH, bat_y-RECTWIDTH,17*RECTWIDTH,5*RECTWIDTH));
   layer_add_child(window_layer, s_temp_layer);
   
   memset(&s_temp_digits_layer, 0, sizeof(s_temp_digits_layer));
@@ -567,12 +663,12 @@ static void main_window_load(Window *window) {
   layer_set_hidden(s_temp_layer, true);
   
   //create battery layer
-  s_battery_layer = layer_create(GRect(RECTWIDTH, (WIDTH+3)*RECTWIDTH,13*RECTWIDTH,3*RECTWIDTH));
+  s_battery_layer = layer_create(GRect(bat_x, bat_y,13*RECTWIDTH,3*RECTWIDTH));
   layer_set_update_proc(s_battery_layer, battery_update_proc);
   layer_add_child(window_layer, s_battery_layer);
   
   //create bluetooth layer
-  s_bt_layer = layer_create(GRect(RECTWIDTH, (WIDTH-4)*RECTWIDTH,7*RECTWIDTH,7*RECTWIDTH));
+  s_bt_layer = layer_create(GRect(bt_x, bt_y,7*RECTWIDTH,7*RECTWIDTH));
   layer_add_child(window_layer, s_bt_layer);  
 
   //Bluetooth img
@@ -627,7 +723,8 @@ static void init() {
   date_format = DDMM_DATE_FORMAT;
   hide_second_hand = false;
   color = WHITE;
-  use_large_digits = true;  
+  use_large_digits = true; 
+  weather_mode = 1;
   
   if(persist_exists(KEY_SECOND_COLOR)){
     color = persist_read_int(KEY_SECOND_COLOR);
@@ -644,9 +741,12 @@ static void init() {
   if(persist_exists(KEY_HIDE_SECONDS)){
     hide_second_hand = persist_read_bool(KEY_HIDE_SECONDS);
   }  
-  /*if(persist_exists(KEY_DATE_FORMAT)){
+  if(persist_exists(KEY_DATE_FORMAT)){
     date_format = persist_read_int(KEY_DATE_FORMAT);
-  }  */
+  } 
+  if(persist_exists(KEY_WEATHER_MODE)){
+    weather_mode = persist_read_int(KEY_WEATHER_MODE);
+  } 
   
   
   // Create main Window element and assign to pointer

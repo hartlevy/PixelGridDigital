@@ -1,9 +1,16 @@
 #include <pebble.h>
 
+#if defined(PBL_RECT)
 #define RECTWIDTH 4
 #define RECTHEIGHT  4
 #define WIDTH (144 / RECTWIDTH)
 #define HEIGHT (168 / RECTHEIGHT)
+#elif defined(PBL_ROUND)
+#define RECTWIDTH 4
+#define RECTHEIGHT 4
+#define WIDTH (180 / RECTWIDTH)
+#define HEIGHT (180 / RECTHEIGHT)
+#endif
 #define NUM_COLOR 8
 #define KEY_TEMPERATURE 2
 #define KEY_SECOND_COLOR 5
@@ -11,6 +18,10 @@
 #define KEY_HIDE_SECONDS 7
 #define KEY_BT_LOGO_TYPE 8
 #define KEY_LARGE_DIGITS 9
+#define KEY_DATE_FORMAT 10
+#define KEY_WEATHER_MODE 11
+
+
   
 #define WEATHER_MESSAGE 0
 #define CONFIG_MESSAGE 1
@@ -136,6 +147,16 @@ static const struct GPathInfo PM_POINTS = {
     {2,1}, {3,0}, {3,1}, {5,0}, 
     {5,1}, {5,2}, {6,0}, {7,0}, 
     {7,1}, {8,0}, {8,1}, {8,2}
+  }
+}; 
+
+static const struct GPathInfo MT_POINTS = {
+  14,
+  (GPoint[]){
+    {1,0}, {1,1}, {1,2}, {2,0},
+    {3,0}, {3,1}, {4,0}, {4,1},
+    {4,2}, {6,0}, {7,0}, {7,1}, 
+    {7,2}, {8,0}
   }
 }; 
 
