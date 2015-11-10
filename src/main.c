@@ -332,15 +332,15 @@ static void update_date(){
   
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
-  uint8_t month = t->tm_mon;
+  uint8_t month = t->tm_mon+1;
   uint8_t day = t->tm_mday;
   uint8_t wday = t->tm_wday;
 
   if(date_format == MMDD_DATE_FORMAT){
     swap(&month,&day);
   }
-  uint8_t m1 = (month+1)/10;
-  uint8_t m2 = (month+1)%10;
+  uint8_t m1 = month/10;
+  uint8_t m2 = month%10;
   uint8_t d1 = day/10;
   uint8_t d2 = day%10;
   

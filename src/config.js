@@ -26,7 +26,7 @@ Pebble.addEventListener('ready', function(e) {
 
 Pebble.addEventListener('showConfiguration', function(e) {
   // Show config page
-  var loc = 'https://cdn.rawgit.com/phytomine/PixelGridDigital/1aa7ca7366f77027f458b0c778b52719ac40e6ed/config/index.html';
+  var loc = 'https://cdn.rawgit.com/phytomine/PixelGridDigital/f4b2cf6fdcf9b896631085938f1793654f603eb0/config/index.html';
   console.log('Showing configuration page');
   Pebble.openURL(loc);  
 });
